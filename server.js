@@ -1,5 +1,5 @@
 // Настройки
-const setup = {port:8000}
+const setup = {port:8080}
 // Подключаем express
 const express = require ('express');
 // const jquery = require('jquery');
@@ -22,6 +22,6 @@ app.get('/', (req, res) => {
 
 
 // Слушаем порт и при запуске сервера сообщаем
-app.listen(process.env.PORT || 5000, () => {
+app.listen(process.env.PORT || setup.port, () => {
     console.log('Сервер: порт %s - старт!', setup.port);
 });
