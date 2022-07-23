@@ -22,6 +22,6 @@ app.get('/', (req, res) => {
 
 
 // Слушаем порт и при запуске сервера сообщаем
-app.listen(setup.port, () => {
+app.listen(process.env.PORT || 5000, () => {
     console.log('Сервер: порт %s - старт!', setup.port);
 });
