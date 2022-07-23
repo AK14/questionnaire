@@ -1,9 +1,9 @@
 // Настройки
-const setup = {port:8000}
+const setup = {port:8080}
 // Подключаем express
 const express = require ('express');
-const jquery = require('jquery');
-const mongoose = require('mongoose');
+// const jquery = require('jquery');
+// const mongoose = require('mongoose');
 
 const app = express ();
 app.use(express.json())
