@@ -1,0 +1,30 @@
+{
+  "name": "questionnaire",
+  "version": "0.0.1",
+  "description": "itAcademy JS Project",
+  "main": "/js/index.js",
+  "scripts": {
+    "course": "course",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "NODE_ENV=production node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AK14/questionnaire.git"
+  },
+  "keywords": [
+    "test project",
+    "course",
+    "JavaScript"
+  ],
+  "author": "AK14",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AK14/questionnaire/issues"
+  },
+  "homepage": "https://github.com/AK14/questionnaire/#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.0",
+    "express": "^4.18.1"
+  }
+}
