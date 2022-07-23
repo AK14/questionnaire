@@ -1,5 +1,5 @@
 // Настройки
-const setup = {port:80}
+const setup = {port:8000}
 // Подключаем express
 const express = require ('express');
 // const jquery = require('jquery');
