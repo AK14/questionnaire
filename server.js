@@ -8,19 +8,17 @@ const express = require ('express');
 const app = express ();
 app.use(express.json())
 
-mongoose.connect('mongodb://hooploop14@gmail.com:Sasha68913040@77c7cbc9-5796-41a7-9e0b-00cc1fdef3ad.questionnaire-200.mongo.a.osc-fr1.scalingo-dbs.com:39447/questionnaire-200?replicaSet=questionnaire-200-rs0&ssl=true',
-    {
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true
-    }
-);
+mongoose.connect('mongodb://hooploop14@gmail.com:Sasha68913040@77c7cbc9-5796-41a7-9e0b-00cc1fdef3ad.questionnaire-200.mongo.a.osc-fr1.scalingo-dbs.com:39447/questionnaire-200?replicaSet=questionnaire-200-rs0&ssl=true');
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error: "));
-db.once("open", function () {
-    console.log("Connected successfully");
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+    console.log("h");
 });
+
+exports.test = function(req,res) {
+    res.render('test');
+};
 
 
 // app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
