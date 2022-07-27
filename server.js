@@ -7,6 +7,8 @@ const Quest = require("./quests/quest")
 
 const app = express ();
 app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+
 app.use(express.json())
 
 /*
@@ -46,14 +48,20 @@ app.use('/public', express.static(__dirname + '/css') );
  */
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+    res.render('index',{
+        title:'Questionnaire'
+    })
 });
 
 const quest = new Quest();
 app.get('/quests', async (req, res) => {
     const quests = await quest.getList();
     try {
-        res.send(quests);
+        // res.send(quests);
+        res.render('quests', {
+            title:'Опросы',
+            quests:quests
+        })
     } catch (error) {
         res.status(500).send(error);
     }
