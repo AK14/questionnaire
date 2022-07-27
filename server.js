@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const Quest = require("./quests/quest")
 
 const app = express ();
+app.set('view engine', 'ejs');
 app.use(express.json())
 
 /*
