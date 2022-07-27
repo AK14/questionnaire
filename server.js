@@ -3,13 +3,15 @@ const setup = {port:8080}
 // Подключаем express
 const express = require ('express');
 const mongoose = require("mongoose");
+const bodyParser = require('body-parser')
 const Quest = require("./quests/quest")
 
 const app = express ();
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
-app.use(express.json())
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 /*
 * database connection
@@ -67,18 +69,17 @@ app.get('/quests', async (req, res) => {
     }
     // res.sendFile(__dirname + '/quests/index.html')
 });
-/* todo delete route
-app.delete('/quests/', async (req, res) => {
-    const result = await quest.deleteQuest(req.body.id);
+
+ // todo delete route
+app.delete('/quests/delete/', async (req, res) => {
+    let id = await (req.body.id);
+    const result = await quest.deleteQuest(id);
     try {
-        res.send(result);
+        res.json(result);
     } catch (error) {
-        console.log(error);
         res.status(500).send(error);
     }
-    // res.sendFile(__dirname + '/quests/index.html')
 });
- */
 
 app.get("/users", async (request, response) => {
     const users = await userModel.find({});
