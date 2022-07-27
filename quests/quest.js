@@ -27,10 +27,9 @@ class Quest {
     }
 
     // Filter a todo out of the array by id
-    deleteQuest(id) {
-        console.log(id);
-        this.questModel.deleteOne({ _id: id });
-        return this.questModel.countDocuments({ _id: id })
+    async deleteQuest(id) {
+       await this.questModel.deleteOne( { _id: id } );
+       return this.questModel.countDocuments({ _id: id })
     }
 
     addQuest(data) {
