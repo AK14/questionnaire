@@ -45,7 +45,12 @@
                             <div class="card-title"><%=quests[i].title %> </div>
                             <%=quests[i].description %>
                             <div class="bt-group card-footer    ">
-                                <button class="change-item btn btn-sm btn-secondary" data-itemId="<%=quests[i]._id %>"> Изменить </button>
+                                <button class="change-item btn btn-sm btn-secondary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editItem"
+                                        data-itemId="<%=quests[i]._id %>">
+                                    Изменить
+                                </button>
                                 <button class="delete-item btn btn-sm btn-dark" data-itemId="<%=quests[i]._id %>"> Удалить </button>
                             </div>
                         </div>
@@ -61,6 +66,29 @@
 
         <!-- Footer Start -->
             <%- include("partials/footer.ejs") %>
+            <div class="modal" tabindex="-1" id="editItem">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Изменить опрос</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#">
+                                <label for="title" class="form-label"> Название </label>
+                                <input type="text" class="form-control" name="title" placeholder="" >
+
+                                <label for="floatingTextarea" class="mt-4">Описание</label>
+                                <textarea class="form-control" placeholder="" id="floatingTextarea"></textarea>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <button type="button" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <!-- Footer End -->
     </div>
         <!-- Content End -->
