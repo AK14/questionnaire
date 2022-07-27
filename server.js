@@ -2,20 +2,25 @@
 const setup = {port:8080}
 // Подключаем express
 const express = require ('express');
-// const jquery = require('jquery');
-// const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Quest = require("./quests/quest")
 
 const app = express ();
 app.use(express.json())
 
-mongoose.connect('mongodb://hooploop14@gmail.com:Sasha68913040@77c7cbc9-5796-41a7-9e0b-00cc1fdef3ad.questionnaire-200.mongo.a.osc-fr1.scalingo-dbs.com:39447/questionnaire-200?replicaSet=questionnaire-200-rs0&ssl=true',
-    {
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true
-    }
-);
+/*
+* database connection
+* */
 
+/*mongoose.connect('mongodb://AlexanderRed:Hel3289608@77c7cbc9-5796-41a7-9e0b-00cc1fdef3ad.questionnaire-200.mongo.a.osc-fr1.scalingo-dbs.com:39447/quest?authSource=questionnaire-200').catch(error => handleError(error));
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error: "));
+db.once("open", function () {
+    console.log("Connected successfully");
+});*/
+
+// connect to local DB
+mongoose.connect('mongodb://localhost:27017/quest').catch(error => handleError(error));
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
@@ -23,22 +28,56 @@ db.once("open", function () {
 });
 
 
-// app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+/**
+ * Integrate (css and js) to structure
+ */
 app.use('/js', express.static(__dirname + '/js'));
 app.use('/public', express.static(__dirname + '/node_modules/bootstrap/dist') );
 app.use('/public', express.static(__dirname + '/node_modules/font-awesome/') );
 app.use('/public', express.static(__dirname + '/node_modules/popper.js/dist') );
-app.use('/public', express.static(__dirname + '/css') );
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/js', express.static(__dirname + '/node_modules/@poperjs/core/dist'));
+app.use('/js/quests/', express.static(__dirname + '/quests/'));
+app.use('/public', express.static(__dirname + '/css') );
 
+/**
+ * Routes
+ */
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 });
 
-app.get('/quests', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+const quest = new Quest();
+app.get('/quests', async (req, res) => {
+    const quests = await quest.getList();
+    try {
+        res.send(quests);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+    // res.sendFile(__dirname + '/quests/index.html')
+});
+/* todo delete route
+app.delete('/quests/', async (req, res) => {
+    const result = await quest.deleteQuest(req.body.id);
+    try {
+        res.send(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+    // res.sendFile(__dirname + '/quests/index.html')
+});
+ */
+
+app.get("/users", async (request, response) => {
+    const users = await userModel.find({});
+    try {
+        response.send(users);
+    } catch (error) {
+        response.status(500).send(error);
+    }
 });
 
 
