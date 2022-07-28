@@ -5,7 +5,6 @@ console.log('aaa');
 class Quest {
     questModel;
     constructor() {
-        console.log('234234');
         // create mongoose schema
         const questSchema = new mongoose.Schema({
             title: {
@@ -32,6 +31,11 @@ class Quest {
        return this.questModel.countDocuments({ _id: id })
     }
 
+    async editQuest(id, updatedData) {
+        let update = await this.questModel.findOneAndUpdate({_id:id},updatedData)
+        return update;
+    }
+
     addQuest(data) {
         console.log(data);
        /* let quest = new this.questModel({
@@ -45,11 +49,7 @@ class Quest {
     }
     /*
     // Map through all todos, and replace the text of the todo with the specified id
-    editTodo(id, updatedData) {
-        this.todos = this.todos.map((todo) =>
-            todo.id === id ? {id: todo.id, text: updatedText, complete: todo.complete} : todo,
-        )
-    }
+
 
 
 

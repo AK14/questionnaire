@@ -70,10 +70,24 @@ app.get('/quests', async (req, res) => {
     // res.sendFile(__dirname + '/quests/index.html')
 });
 
- // todo delete route
 app.delete('/quests/delete/', async (req, res) => {
     let id = await (req.body.id);
     const result = await quest.deleteQuest(id);
+    try {
+        res.json(result);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.post('/quests/edit/', async (req, res) => {
+    let id = await (req.body.id);
+    let data = await ({
+        title:req.body.title,
+        description:req.body.description
+    })
+
+    const result = await quest.editQuest(id,data);
     try {
         res.json(result);
     } catch (error) {

@@ -24,11 +24,31 @@ window.onload = () => {
         let title = $(this).parent().parent().find('.card-title').text();
         let description = $(this).parent().parent().find('.description').text();
         // set data to form
-        $('form[name="edit-item-form"] input[name="id"]').val(itemId);
-        $('form[name="edit-item-form"] input[name="title"]').val(title);
-        $('form[name="edit-item-form"] textarea[name="description"]').val(description);
+        $('#edit-item-form input[name="id"]').val(itemId);
+        $('#edit-item-form input[name="title"]').val(title);
+        $('#edit-item-form textarea[name="description"]').val(description);
     })
 
+    // EDIT form handler
+    $('#edit-item-form').on('submit', function (e){
+        e.preventDefault();
+        let formData = new FormData(this);
+
+        $.ajax({
+            method:'POST',
+            url:'/quests/edit/',
+            data:{
+                id:formData.get('id'),
+                title:formData.get('title'),
+                description:formData.get('description')
+            },
+            success: function(response){
+                window.location = '/quests';
+            },error: function(err){
+                console.log(err);
+            }
+        })
+    })
 }
 
 
