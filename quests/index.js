@@ -16,6 +16,19 @@ window.onload = () => {
             }
         })
     })
+
+    // EDIT handler
+    $('.change-item').on('click', function (e){
+        // get item data
+        let itemId = e.target.getAttribute('data-itemId');
+        let title = $(this).parent().parent().find('.card-title').text();
+        let description = $(this).parent().parent().find('.description').text();
+        // set data to form
+        $('form[name="edit-item-form"] input[name="id"]').val(itemId);
+        $('form[name="edit-item-form"] input[name="title"]').val(title);
+        $('form[name="edit-item-form"] textarea[name="description"]').val(description);
+    })
+
 }
 
 
