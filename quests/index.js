@@ -1,4 +1,23 @@
 window.onload = () => {
+    // CREATE  handler
+    $('#create-quest').on('submit', function (e){
+        e.preventDefault();
+        let formData = new FormData(this);
+
+        $.ajax({
+            method:'POST',
+            url:'/quests/create/',
+            data:{
+                title:formData.get('title'),
+                description:formData.get('description')
+            },
+            success: function(response){
+                window.location = '/quests';
+            },error: function(err){
+                console.log(err);
+            }
+        })
+    })
 
     // DELETE handler
     $('.delete-item').on('click', function (e){

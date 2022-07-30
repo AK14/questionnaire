@@ -25,40 +25,24 @@ class Quest {
         return quests;
     }
 
-    // Filter a todo out of the array by id
+    async addQuest(data) {
+         let quest = new this.questModel({
+             title: data.title,
+             description: data.description
+         })
+
+         await quest.save(function (err, doc) {
+             return doc._id
+         })
+    }
+
     async deleteQuest(id) {
        await this.questModel.deleteOne( { _id: id } );
        return this.questModel.countDocuments({ _id: id })
     }
 
     async editQuest(id, updatedData) {
-        let update = await this.questModel.findOneAndUpdate({_id:id},updatedData)
-        return update;
+        return await this.questModel.findOneAndUpdate({_id:id},updatedData)
     }
-
-    addQuest(data) {
-        console.log(data);
-       /* let quest = new this.questModel({
-            title: data.title,
-            description: data.description
-        })
-
-        quest.save(function (err, doc) {
-            return doc._id
-        })*/
-    }
-    /*
-    // Map through all todos, and replace the text of the todo with the specified id
-
-
-
-
-    // Flip the complete boolean on the specified todo
-    toggleTodo(id) {
-        this.todos = this.todos.map((todo) =>
-            todo.id === id ? {id: todo.id, text: todo.text, complete: !todo.complete} : todo,
-        )
-    }
-    */
 }
 module.exports = Quest;
