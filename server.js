@@ -80,6 +80,20 @@ app.delete('/quests/delete/', async (req, res) => {
     }
 });
 
+app.post('/quests/create/', async (req, res) => {
+    let data = await ({
+        title:req.body.title,
+        description:req.body.description
+    })
+
+    const result = await quest.addQuest(data);
+    try {
+        res.json(result);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 app.post('/quests/edit/', async (req, res) => {
     let id = await (req.body.id);
     let data = await ({
