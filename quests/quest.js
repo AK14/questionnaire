@@ -20,9 +20,8 @@ class Quest {
         this.questModel = mongoose.model('Quest', questSchema);
     }
 
-    getList(){
-        const quests = this.questModel.find({});
-        return quests;
+    async getList(){
+        return  await this.questModel.find({});
     }
 
     async addQuest(data) {
