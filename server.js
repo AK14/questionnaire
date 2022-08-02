@@ -5,6 +5,7 @@ const express = require ('express');
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser')
 const Quest = require("./quests/quest")
+const Question = require("./questions/question")
 
 const app = express ();
 app.set('view engine', 'ejs');
@@ -16,8 +17,8 @@ app.use(bodyParser.json());
 /*
 * database connection
 * */
-// const mongo_url = 'mongodb://localhost:27017/quest';
-const mongo_url = 'mongodb://questionnaire-200:pQJiNmjthbVCnTx7xsP_@77c7cbc9-5796-41a7-9e0b-00cc1fdef3ad.questionnaire-200.mongo.a.osc-fr1.scalingo-dbs.com:39447/questionnaire-200?replicaSet=questionnaire-200-rs0&ssl=true';
+const mongo_url = 'mongodb://localhost:27017/quest';
+// const mongo_url = 'mongodb://questionnaire-200:pQJiNmjthbVCnTx7xsP_@77c7cbc9-5796-41a7-9e0b-00cc1fdef3ad.questionnaire-200.mongo.a.osc-fr1.scalingo-dbs.com:39447/questionnaire-200?replicaSet=questionnaire-200-rs0&ssl=true';
 
 // connect to local DB
 mongoose.connect(mongo_url).catch(error => handleError(error));
@@ -50,12 +51,19 @@ app.get('/', (req, res) => {
     })
 });
 
-const quest = new Quest();
+let quest = new Quest();
+let question = new Question();
+
+
+/**
+ * Quest routes
+ */
+
 app.get('/quests', async (req, res) => {
     const quests = await quest.getList();
     try {
         // res.send(quests);
-        res.render('quests', {
+        res.render('quest/index', {
             title:'Опросы',
             quests:quests
         })
@@ -64,7 +72,21 @@ app.get('/quests', async (req, res) => {
     }
     // res.sendFile(__dirname + '/quests/index.html')
 });
-
+app.get('/quests/:questId', async (req, res) => {
+    let paramId = req.params.questId;
+    const result = await quest.getById(paramId);
+    res.json(result)
+/*
+    try {
+        // res.send(quests);
+        res.render('quest/detail', {
+            itemData:result
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+    */
+});
 app.delete('/quests/delete/', async (req, res) => {
     let id = await (req.body.id);
     const result = await quest.deleteQuest(id);
@@ -74,7 +96,6 @@ app.delete('/quests/delete/', async (req, res) => {
         res.status(500).send(error);
     }
 });
-
 app.post('/quests/create/', async (req, res) => {
     let data = await ({
         title:req.body.title,
@@ -88,7 +109,6 @@ app.post('/quests/create/', async (req, res) => {
         res.status(500).send(error);
     }
 });
-
 app.post('/quests/edit/', async (req, res) => {
     let id = await (req.body.id);
     let data = await ({
@@ -104,13 +124,53 @@ app.post('/quests/edit/', async (req, res) => {
     }
 });
 
-app.get("/users", async (request, response) => {
-    const users = await userModel.find({});
-    try {
-        response.send(users);
+
+/**
+ * Questions routes
+ */
+
+app.get('/question', async (req, res) => {
+    const quests = await question.getList();
+    res.json(quests);
+    /*try {
+        // res.send(quests);
+        res.render('quest/index', {
+            title:'Опросы',
+            quests:quests
+        })
     } catch (error) {
-        response.status(500).send(error);
+        res.status(500).send(error);
+    }*/
+    // res.sendFile(__dirname + '/quests/index.html')
+});
+app.post('/question/create/', async (req, res) => {
+    let data = await ({
+        title:req.body.title,
+        description:req.body.description,
+        quest:req.body.quest,
+        answers:req.body.answers
+    })
+
+    const result = await question.addQuestion(data);
+    try {
+        res.json(result);
+    } catch (error) {
+        res.status(500).send(error);
     }
+});
+app.delete('/question/:id', async (req, res) => {
+    let id = req.params.id;
+    const result = await question.delete(id);
+    try {
+        res.json(result);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+app.get('/question/:questId', async (req, res) => {
+    let id = req.params.questId;
+    let result = await question.getListByQuestId(id);
+    res.json(result);
 });
 
 
