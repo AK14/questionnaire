@@ -1,15 +1,28 @@
 // Настройки
 const setup = {port:8080}
 // Подключаем express
-const express = require ('express');
+/*const express = require ('express');
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser')
 const Quest = require("./quests/quest")
-const Question = require("./questions/question")
+const Question = require("./questions/question")*/
+
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import Quest from "./quests/quest.js";
+import Question from "./questions/question.js";
+
+import mongoose from 'mongoose';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express ();
 app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
+app.use('views',express.static(__dirname + ('views')));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -32,14 +45,14 @@ db.once("open", function () {
 /**
  * Integrate (css and js) to structure
  */
-app.use('/js', express.static(__dirname + '/js'));
+app.use('/js', express.static( __dirname + '/js') );
+app.use('/public', express.static(__dirname + '/css') );
 app.use('/public', express.static(__dirname + '/node_modules/bootstrap/dist') );
 app.use('/public', express.static(__dirname + '/node_modules/font-awesome/') );
 app.use('/public', express.static(__dirname + '/node_modules/popper.js/dist') );
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/js', express.static(__dirname + '/node_modules/@poperjs/core/dist'));
 app.use('/js/quests/', express.static(__dirname + '/quests/'));
-app.use('/public', express.static(__dirname + '/css') );
 
 /**
  * Routes
@@ -52,8 +65,6 @@ app.get('/', (req, res) => {
 });
 
 let quest = new Quest();
-let question = new Question();
-
 
 /**
  * Quest routes
@@ -75,8 +86,7 @@ app.get('/quests', async (req, res) => {
 app.get('/quests/:questId', async (req, res) => {
     let paramId = req.params.questId;
     const result = await quest.getById(paramId);
-    res.json(result)
-/*
+    // res.json(result)
     try {
         // res.send(quests);
         res.render('quest/detail', {
@@ -85,7 +95,6 @@ app.get('/quests/:questId', async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-    */
 });
 app.delete('/quests/delete/', async (req, res) => {
     let id = await (req.body.id);
@@ -128,6 +137,7 @@ app.post('/quests/edit/', async (req, res) => {
 /**
  * Questions routes
  */
+let question = new Question();
 
 app.get('/question', async (req, res) => {
     const quests = await question.getList();
