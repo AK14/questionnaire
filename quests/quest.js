@@ -1,27 +1,29 @@
-const mongoose = require("mongoose");
+import QuestModel from "../models/quest.js";
+import Question from "../questions/question.js";
 
-console.log('aaa');
+let  question = new Question();
 
-class Quest {
+ class Quest {
     questModel;
     constructor() {
-        // create mongoose schema
-        const questSchema = new mongoose.Schema({
-            title: {
-                type: String,
-                required: true
-            },
-            description: {
-                type: String,
-                required: true,
-            }
-        });
-        // create mongoose db model
-        this.questModel = mongoose.model('Quest', questSchema);
+        this.questModel = QuestModel;
     }
 
     async getList(){
-        return  await this.questModel.find({});
+        return await this.questModel.find({});
+    }
+
+    async getById(id){
+        let result = {};
+        let data = await this.questModel.findOne({_id:id});
+        let questions =  await question.getListByQuestId(id);
+
+       result.id = data._id;
+       result.title = data.title;
+       result.description = data.description
+       result.questions = questions;
+
+        return result;
     }
 
     async addQuest(data) {
@@ -44,4 +46,5 @@ class Quest {
         return await this.questModel.findOneAndUpdate({_id:id},updatedData)
     }
 }
-module.exports = Quest;
+
+export default Quest;
