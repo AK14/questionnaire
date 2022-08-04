@@ -19,6 +19,7 @@
   ],
   "author": "AK14",
   "license": "ISC",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/AK14/questionnaire/issues"
   },
