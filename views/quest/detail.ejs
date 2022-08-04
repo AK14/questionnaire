@@ -31,30 +31,43 @@
         <!-- Navbar End -->
 
         <!-- Content Start -->
+
         <div class="container-fluid pt-4 px-4">
-            <div class="row vh-100 bg-light rounded align-items-center justify-content-center mx-0">
+            <div class="vh-50 bg-light rounded align-items-center justify-content-center mx-0">
 
-                <% if(itemData.title) {%>
-                <div class="col-md-12 text-center">
-                    <h3><%=itemData.title %></h3>
+                <div class="col-md-12 text-center border-bottom rounded p-4 mb-4">
+                    <% if(itemData.title) {%>
+                    <div class="h4"><%=itemData.title %></div>
+                    <%}%>
+                    <% if(itemData.description) {%>
+                    <div>
+                        <%=itemData.description%>
+                    </div>
+                    <%}%>
                 </div>
-                <%}%>
 
-                <% if(itemData.description) {%>
-                <div>
-                    <%=itemData.description%>
-                </div>
-                <%}%>
-                <!--
-                <button type="button" class="btn btn-success col-2 offset-8" data-bs-toggle="modal" data-bs-target="#newQuest">
-                    Создать опрос
-                </button>
-                <%/* if(quest.queries) {%>
-                    <%- include('../queries/list', {query:queries}) %>
-                <% }else {%>
-                    Опросы еще не созданы
-                <%} */%>
-                -->
+
+                <% if(itemData.questions) {%>
+                    <% for(question of itemData.questions) {%>
+                        <div class="row p-2 mb-2 border-bottom">
+                            <div class="col-4 text-center">
+                                <div class=""><%= question.title %> </div>
+                                <div class=""> <%= question.description %> </div>
+                                <div class="align-bottom mt-4">
+                                    <button type="button" class="btn btn-sm btn-outline-primary m-2"><i class="fa fa-edit me-2"></i>Изменить</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger m-2"><i class="fa fa-trash me-2"></i>Удалить</button>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <% for(answer of question.answers) {%>
+                                    <p><%= answer %></p>
+                                <%} %>
+                            </div>
+                        </div>
+                    <%} %>
+                <% }%>
+
+
             </div>
         </div>
         <!-- Content End -->
