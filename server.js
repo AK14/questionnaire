@@ -158,7 +158,7 @@ app.post('/question/create/', async (req, res) => {
         title:req.body.title,
         description:req.body.description,
         quest:req.body.quest,
-        answers:req.body.answers
+        answers:req.body.answers.split(',')
     })
 
     const result = await question.addQuestion(data);
