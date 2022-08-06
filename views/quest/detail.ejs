@@ -40,10 +40,16 @@
                     <div class="h4"><%=itemData.title %></div>
                     <%}%>
                     <% if(itemData.description) {%>
-                    <div>
+                    <div class="description">
                         <%=itemData.description%>
                     </div>
                     <%}%>
+                    <button type="button" class="btn btn-square btn-outline-secondary m-2 change-item"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editItem"
+                            data-itemId="<%= itemData.id %>">
+                        <i class="fa fa-pencil"></i>
+                    </button>
                 </div>
 
 
