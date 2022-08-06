@@ -1,29 +1,23 @@
 // Настройки
 const setup = {port:8080}
-// Подключаем express
-/*const express = require ('express');
-const mongoose = require("mongoose");
-const bodyParser = require('body-parser')
-const Quest = require("./quests/quest")
-const Question = require("./questions/question")*/
-
+// Подключаем зависимости
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Quest from "./quests/quest.js";
 import Question from "./questions/question.js";
-
 import mongoose from 'mongoose';
 
+// формируем пересенные
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
+const quest = new Quest();
+const question = new Question();
 const app = express ();
+
 app.set('view engine', 'ejs');
 app.use('views',express.static(__dirname + ('views')));
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -66,7 +60,19 @@ app.get('/', async (req, res) => {
     })
 });
 
-let quest = new Quest();
+
+app.get('/:questId', async (req, res) => {
+    let paramId = req.params.questId;
+    const result = await quest.getById(paramId);
+    try {
+        // res.send(quests);
+        res.render('public/', {
+            quest:result
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
 /**
  * Quest routes
@@ -139,21 +145,10 @@ app.post('/quests/edit/', async (req, res) => {
 /**
  * Questions routes
  */
-let question = new Question();
 
 app.get('/question', async (req, res) => {
     const quests = await question.getList();
     res.json(quests);
-    /*try {
-        // res.send(quests);
-        res.render('quest/index', {
-            title:'Опросы',
-            quests:quests
-        })
-    } catch (error) {
-        res.status(500).send(error);
-    }*/
-    // res.sendFile(__dirname + '/quests/index.html')
 });
 app.post('/question/create/', async (req, res) => {
     let data = await ({
