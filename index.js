@@ -1,32 +1,36 @@
-const insQuestion = document.getElementById("question");
-const insAnswer1 = document.getElementById("answer1");
-const insAnswer2 = document.getElementById("answer2");
-const insAnswer3 = document.getElementById("answer3");
-const insAnswer4 = document.getElementById("answer4");
-const button_add = document.getElementById("button");
+const form = document.getElementById("form");
 
 class QuestionList {
     constructor() {
       this.questionMass = [];
     }
-
-    addToList(questionText, answer1Text, answer2Text, answer3Text, answer4Text ) {
-        const obj = { questionText: questionText, answer1Text: answer1Text, answer2Text: answer2Text, answer3Text: answer3Text,  answer4Text: answer4Text};
-        console.log(obj)
-        this.questionMass.push(obj);
-       
+    static validate(data) {
+      if (data.from && data.text && data.review >= 1 && data.review <= 5) {
+        return true;
       }
+      return false;
+    }
+
+    addToList(data) {
+      this.questionMass.push(data);
+      }
+
 }
 
-let NewQuestionList = new QuestionList();
+const NewQuestionList = new QuestionList();
 
-button_add.addEventListener("click", function (event) {
-  const questionText = insQuestion.innerText;
-  const answer1Text = insAnswer1.innerText;
-  const answer2Text = insAnswer2.innerText;
-  const answer3Text = insAnswer3.innerText;
-  const answer4Text = insAnswer4.innerText;
-  NewQuestionList.addToList(questionText, answer1Text, answer2Text, answer3Text, answer4Text);
-
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const formDataEntries = formData.entries();
+  const data = Object.fromEntries(formDataEntries);
+ /*  const validate = Review.validate(data);
+  if (validate) {
+    review.addToList(data);
+  } else {
+    alert("not a value");
+  } */
+ console.log(data)
 });
+
 

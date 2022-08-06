@@ -10,7 +10,7 @@ html, body {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
   }
   
   .button {
@@ -76,19 +76,10 @@ html, body {
     display: none;
   }
   
-  @keyframes ring {
-    0% {
-      width: 30px;
-      height: 30px;
-      opacity: 1;
-    }
-    100% {
-      width: 300px;
-      height: 300px;
-      opacity: 0;
-    }
-  }
-
+  
+ 
+ 
+  
   input[type=text] {
     padding:10px;
     border:0;
