@@ -58,9 +58,11 @@ app.use('/js/quests/', express.static(__dirname + '/quests/'));
  * Routes
  */
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    const quests = await quest.getList();
     res.render('index',{
-        title:'Questionnaire'
+        title:'Опросы на сайте',
+        quests: quests
     })
 });
 
