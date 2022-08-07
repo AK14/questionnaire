@@ -41,7 +41,7 @@ window.onload = () => {
         // get item data
         let itemId = this.getAttribute('data-itemId');
         let title = $(this).parent().parent().find('.h4').text();
-        let description = $(this).parent().parent().find('.description').text();
+        let description = $(this).parent().parent().find('.description').text().trim();
         // set data to form
         $('#edit-item-form input[name="id"]').val(itemId);
         $('#edit-item-form input[name="title"]').val(title);
@@ -62,7 +62,7 @@ window.onload = () => {
                 description:formData.get('description')
             },
             success: function(response){
-                window.location = '/quests';
+                window.location.reload();
             },error: function(err){
                 console.log(err);
             }

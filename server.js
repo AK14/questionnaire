@@ -161,7 +161,11 @@ app.post('/question/create/', async (req, res) => {
 
     let result = await question.addQuestion(data);
     try {
-        res.json(result);
+        let response = {
+            status  : 200,
+            success : 'Added Successfully'
+        }
+        res.json(response);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -170,7 +174,12 @@ app.delete('/question/:id', async (req, res) => {
     let id = req.params.id;
     let result = await question.delete(id);
     try {
-        res.json(result);
+        let response = {
+            status  : 200,
+            success : 'Delete Successfully',
+            data: quest
+        }
+        res.json(response);
     } catch (error) {
         res.status(500).send(error);
     }

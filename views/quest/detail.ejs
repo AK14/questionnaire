@@ -12,6 +12,7 @@
     <script type="text/javascript" src="/js/jquery.min.js" defer></script>
     <script type="text/javascript" src="/js/index.js" defer></script>
     <script type="text/javascript" src="/js/quests/index.js" defer></script>
+    <script type="text/javascript" src="/js/questions/index.js" defer></script>
     <script type="text/javascript" src="/public/js/bootstrap.bundle.min.js" defer></script>
 
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -44,6 +45,10 @@
                         <%=itemData.description%>
                     </div>
                     <%}%>
+                    <button class="btn btn-outline-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#newQuestion">
+                    Добавить вопрос </button>
                     <button type="button" class="btn btn-square btn-outline-secondary m-2 change-item"
                             data-bs-toggle="modal"
                             data-bs-target="#editItem"
@@ -52,16 +57,22 @@
                     </button>
                 </div>
 
-
-                <% if(itemData.questions) {%>
+                <div id="questions-content">
+                    <% if(itemData.questions) {%>
                     <% for(question of itemData.questions) {%>
                         <div class="row p-2 mb-2 border-bottom">
                             <div class="col-4 text-center">
                                 <div class=""><%= question.title %> </div>
                                 <div class=""> <%= question.description %> </div>
                                 <div class="align-bottom mt-4">
-                                    <button type="button" class="btn btn-sm btn-outline-primary m-2"><i class="fa fa-edit me-2"></i>Изменить</button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger m-2"><i class="fa fa-trash me-2"></i>Удалить</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary m-2" data-question="<%= question._id%>">
+                                        <i class="fa fa-edit me-2"></i>
+                                        Изменить
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger m-2" data-question="<%= question._id%>">
+                                        <i class="fa fa-trash me-2"></i>
+                                        Удалить
+                                    </button>
                                 </div>
                             </div>
                             <div class="col-8">
@@ -72,7 +83,7 @@
                         </div>
                     <%} %>
                 <% }%>
-
+                </div>
 
             </div>
         </div>
@@ -82,7 +93,7 @@
         <!-- Footer Start -->
         <%- include("../partials/footer.ejs") %>
         <%- include("../quest/edit_modal.ejs") %>
-        <%- include("../quest/create_modal.ejs") %>
+        <%- include("../questions/create_modal.ejs") %>
         <!-- Footer End -->
     </div>
     <!-- Content End -->
