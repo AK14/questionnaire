@@ -1,6 +1,6 @@
 <html lang="ru">
 <head>
-    <title> <%=title %> </title>
+    <title> <%=quest.title %> </title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,30 +24,16 @@
     <div class="container-fluid">
         <div class="row h-100 p-4 align-items-center justify-content-center" style="min-height: 100vh;">
             <div class="container-fluid pt-4 px-4">
-                <div class="h3 text-center"> <%= title %> </div>
-                <div class="row vh-100 bg-light p-4 rounded align-items-center  mx-0">
-                    <% if(quests) {%>
-                        <% for(quest of quests) {%>
-                        <div class="card col-3 m-1">
-                            <div class="card-body">
-                                <div class="card-title"><%=quest.title %> </div>
-                                <div class="description"> <%=quest.description %> </div>
-                            </div>
-                            <div class="card-footer">
-                                <a href="pub/<%= quest.id%>" class="btn btn-sm btn-outline-success mb-1 "> Пройти опрос </a>
-                            </div>
-                        </div>
-                        <%} %>
-                    <% }else {%>
-                        Опросы еще не созданы
-                    <%} %>
-
-                </div>
+                <% if(quest.title){%>
+                    <div class="h3 text-center"> <%= quest.title %> </div>
+                <%}%>
+                <% if(quest.description){%>
+                    <div class="text-center"> <%= quest.description %> </div>
+                <%}%>
             </div>
 
-
             <!-- Footer Start -->
-            <%- include("partials/footer.ejs") %>
+            <%- include("../partials/footer.ejs") %>
             <!-- Footer End -->
         </div>
 

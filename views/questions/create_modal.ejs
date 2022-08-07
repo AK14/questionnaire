@@ -1,0 +1,39 @@
+<div class="modal" tabindex="-1" id="newQuestion">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавление вопроса</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="container" id="create-question">
+                    <input type="hidden" name="quest" value="<%= itemData.id %>">
+                    <div class="container" >
+                        <div class="row">
+                            <div class="form-group mb-4">
+                                <label for="exampleInputEmail1" class="form-label" > Вопрос пользователю </label>
+                                <input type="text-question" name="question" id="question" class="form-control" placeholder="Click to start typing your question .">
+                            </div>
+
+                            <div class="container mt-2" id="answers">
+                                <div class="form-label"> Ответы </div>
+                                <small class="text-muted"> 1й ответ - должен быть правильный </small>
+                                <input type="text" name="answer-1" class="form-control mb-1" placeholder="Add answer 1" >
+                                <input type="text" name="answer-2" class="form-control mb-1" placeholder="Add answer 2">
+                            </div>
+                            
+                            <div class="wrap">
+                                <button id="buttonAdd" class="btn btn-sm btn-outline-secondary"> + </button>
+<!--                                <button type="submit" id="button" class="button">Submit</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" form="create-question" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>

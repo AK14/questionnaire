@@ -4,13 +4,10 @@
         <div class="card-title"><%=quests[i].title %> </div>
         <div class="description"> <%=quests[i].description %> </div>
         <div class="bt-group card-footer    ">
-            <button class="change-item btn btn-sm btn-secondary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#editItem"
-                    data-itemId="<%=quests[i]._id %>">
+            <a href="/quests/<%=quests[i]._id %>" class="change-item btn btn-sm btn-outline-primary">
                 Изменить
-            </button>
-            <button class="delete-item btn btn-sm btn-dark" data-itemId="<%=quests[i]._id %>"> Удалить </button>
+            </a>
+            <button class="delete-item btn btn-sm btn-outline-danger" data-itemId="<%=quests[i]._id %>"> Удалить </button>
         </div>
     </div>
 </div>

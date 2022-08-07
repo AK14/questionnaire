@@ -1,29 +1,23 @@
 // Настройки
 const setup = {port:8080}
-// Подключаем express
-/*const express = require ('express');
-const mongoose = require("mongoose");
-const bodyParser = require('body-parser')
-const Quest = require("./quests/quest")
-const Question = require("./questions/question")*/
-
+// Подключаем зависимости
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Quest from "./quests/quest.js";
 import Question from "./questions/question.js";
-
 import mongoose from 'mongoose';
 
+// формируем пересенные
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
+let quest = new Quest();
+let question = new Question();
 const app = express ();
+
 app.set('view engine', 'ejs');
 app.use('views',express.static(__dirname + ('views')));
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -53,39 +47,54 @@ app.use('/public', express.static(__dirname + '/node_modules/popper.js/dist') );
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/js', express.static(__dirname + '/node_modules/@poperjs/core/dist'));
 app.use('/js/quests/', express.static(__dirname + '/quests/'));
+app.use('/js/questions/', express.static(__dirname + '/questions/'));
 
 /**
  * Routes
  */
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    let quests = await quest.getList();
     res.render('index',{
-        title:'Questionnaire'
+        title:'Опросы на сайте',
+        quests: quests
     })
 });
 
-let quest = new Quest();
+
+app.get('/pub/:questId', async (req, res) => {
+    let paramId = req.params.questId;
+    const result = await quest.getById(paramId);
+    try {
+        // res.send(quests);
+        res.render('public/', {
+            quest:result
+        })
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
 /**
  * Quest routes
  */
 
 app.get('/quests', async (req, res) => {
-    const quests = await quest.getList();
+    let quests1 = await quest.getList();
+
     try {
         // res.send(quests);
         res.render('quest/index', {
             title:'Опросы',
-            quests:quests
+            quests:quests1
         })
     } catch (error) {
         res.status(500).send(error);
     }
-    // res.sendFile(__dirname + '/quests/index.html')
 });
 app.get('/quests/:questId', async (req, res) => {
     let paramId = req.params.questId;
-    const result = await quest.getById(paramId);
+    let result = await quest.getById(paramId);
     // res.json(result)
     try {
         // res.send(quests);
@@ -98,7 +107,7 @@ app.get('/quests/:questId', async (req, res) => {
 });
 app.delete('/quests/delete/', async (req, res) => {
     let id = await (req.body.id);
-    const result = await quest.deleteQuest(id);
+    let result = await quest.deleteQuest(id);
     try {
         res.json(result);
     } catch (error) {
@@ -111,7 +120,7 @@ app.post('/quests/create/', async (req, res) => {
         description:req.body.description
     })
 
-    const result = await quest.addQuest(data);
+    let result = await quest.addQuest(data);
     try {
         res.json(result);
     } catch (error) {
@@ -125,7 +134,7 @@ app.post('/quests/edit/', async (req, res) => {
         description:req.body.description
     })
 
-    const result = await quest.editQuest(id,data);
+    let result = await quest.editQuest(id,data);
     try {
         res.json(result);
     } catch (error) {
@@ -137,21 +146,10 @@ app.post('/quests/edit/', async (req, res) => {
 /**
  * Questions routes
  */
-let question = new Question();
 
 app.get('/question', async (req, res) => {
-    const quests = await question.getList();
-    res.json(quests);
-    /*try {
-        // res.send(quests);
-        res.render('quest/index', {
-            title:'Опросы',
-            quests:quests
-        })
-    } catch (error) {
-        res.status(500).send(error);
-    }*/
-    // res.sendFile(__dirname + '/quests/index.html')
+    let question = await question.getList();
+    res.json(question);
 });
 app.post('/question/create/', async (req, res) => {
     let data = await ({
@@ -161,18 +159,27 @@ app.post('/question/create/', async (req, res) => {
         answers:req.body.answers.split(',')
     })
 
-    const result = await question.addQuestion(data);
+    let result = await question.addQuestion(data);
     try {
-        res.json(result);
+        let response = {
+            status  : 200,
+            success : 'Added Successfully'
+        }
+        res.json(response);
     } catch (error) {
         res.status(500).send(error);
     }
 });
 app.delete('/question/:id', async (req, res) => {
     let id = req.params.id;
-    const result = await question.delete(id);
+    let result = await question.delete(id);
     try {
-        res.json(result);
+        let response = {
+            status  : 200,
+            success : 'Delete Successfully',
+            data: quest
+        }
+        res.json(response);
     } catch (error) {
         res.status(500).send(error);
     }
