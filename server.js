@@ -121,8 +121,13 @@ app.post('/quests/create/', async (req, res) => {
     })
 
     let result = await quest.addQuest(data);
+    let response = {
+        status  : 200,
+        success : 'Added Successfully',
+        id: JSON.stringify(result)
+    }
     try {
-        res.json(result);
+        res.json(response);
     } catch (error) {
         res.status(500).send(error);
     }
