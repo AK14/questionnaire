@@ -48,6 +48,7 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/js', express.static(__dirname + '/node_modules/@poperjs/core/dist'));
 app.use('/js/quests/', express.static(__dirname + '/quests/'));
 app.use('/js/questions/', express.static(__dirname + '/questions/'));
+app.use('/public/js/quiz/', express.static(__dirname + '/quiz/'));
 
 /**
  * Routes
@@ -62,7 +63,7 @@ app.get('/', async (req, res) => {
 });
 
 
-app.get('/pub/:questId', async (req, res) => {
+app.get('/quiz/:questId', async (req, res) => {
     let paramId = req.params.questId;
     const result = await quest.getById(paramId);
     try {
