@@ -32,9 +32,11 @@ let  question = new Question();
              description: data.description
          })
 
+        let result = {}
          await quest.save(function (err, doc) {
-             return doc._id
+             result = doc;
          })
+        return result;
     }
 
     async deleteQuest(id) {
