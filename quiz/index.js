@@ -1,44 +1,3 @@
-let test = {
-    title: 'простенький опросник',
-    description: 'вопросы по тематике автомобилей, марки и тд',
-    questions:
-        [{
-            title: 'Когда была основана компания BMW',
-            answers: {
-                answ1: '1900',
-                answ2: '1920',
-                anssw3: '1950',
-                anssw4: '1950'
-            }
-        },
-            {
-                title: 'Куда лучше уехать релокейт',
-                answers: {
-                    answ1: 'Словакая',
-                    answ2: 'Болгария',
-                    anssw3: 'Чехия'
-                }
-            },
-            {
-                title: 'Здесь мог быть вопрос',
-                answers: {
-                    answ1: '1ый ответ',
-                    answ2: '2ой ответ',
-                    anssw3: '3ий ответ'
-                }
-            },
-            {
-                title: 'sadasdsadasd',
-                answers: {
-                    answ1: '1ый ответ',
-                    answ2: '2ой ответ',
-                    anssw3: '3ий ответ'
-                }
-            },
-        ]
-
-}
-
 class QuestionList {
     constructor(blockOfQuestions) {
         this.blockOfQuestions = blockOfQuestions;
@@ -48,26 +7,34 @@ class QuestionList {
     }
 
     getElement(selector) {
-        const element = document.querySelector(selector)
-        return element
+        return  document.querySelector(selector)
     }
-    render() {
+    async render() {
+        const questionsBlock = document.getElementById("questions");
+
+        // получаем список ответов
         const listAnswer = Object.values(this.blockOfQuestions.questions[this.iter].answers);
+        // сортируем
         const listAnswerMix = listAnswer.sort((a, b) => 0.5 - Math.random());
-        const yourScore = `<p> Your score: ${this.userScore} / ${this.blockOfQuestions.questions.length} </p>`
+        // результат
+        const yourScore = `<p class="text-end"> Ваш результат: ${this.userScore} / ${this.blockOfQuestions.questions.length} </p>`
+        // title вопроса
         const HTML = ` <p class="lead"> ${this.blockOfQuestions.questions[this.iter].title} </p> 
         ${listAnswerMix.map((e) =>
             `<div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" value="${e}">
-             ${e} </div>`).join('')}`;
-        document.getElementById("questions").innerHTML = `<form> ${HTML}  ${yourScore} </form></div>    <button id='Submit'>Submit</button>`
+                <input class="form-check-input" type="radio" name="flexRadioDefault" value="${e}">
+                    ${e} </div>`).join('')}`;
+        // форма для вопроса
+        questionsBlock.innerHTML = `<form> ${HTML}  ${yourScore} </form></div>    <button class="btn btn-primary" id='Submit'>Ответить</button>`
+
         this.submit = document.getElementById('Submit')
+
         this.submit.addEventListener('click', (event) => {
             this.ifAnswerTrue();
         })
     }
     renderScore() {
-        const yourScore = `<p> Congrutulations! Your score: ${this.userScore} / ${this.blockOfQuestions.questions.length} </p>`
+        const yourScore = `<p> Поздравляем с окончанием теста!<br> Ваш результат: ${this.userScore} / ${this.blockOfQuestions.questions.length} </p>`
         document.getElementById("questions").innerHTML = `<form> ${yourScore} </form></div>`
     }
     goNext() {
@@ -80,14 +47,30 @@ class QuestionList {
     }
     ifAnswerTrue() {
         const userAnswer = document.querySelector('input[name="flexRadioDefault"]:checked').value;
-        if (userAnswer == this.blockOfQuestions.questions[this.iter].answers.answ1) {
+        if (userAnswer == this.blockOfQuestions.questions[this.iter].answers[0]) {
             this.userScore = this.userScore + 1;
-            alert('правильный ответ')
+            this.showAlert('success','правильный ответ');
             this.goNext();
         } else {
-            alert('ответ не правильный')
+            this.showAlert('danger','ответ не правильный');
             this.goNext();
         }
     }
+
+    showAlert(type, message){
+        let element = document.querySelector('.modal-body');
+        element.className = 'modal-body alert alert-'+type;
+        element.innerHTML = message
+        $('#alertModal').modal('toggle');
+        setTimeout(()=>{
+            $('#alertModal').modal('toggle');
+        }, 1000)
+    }
+
+
 }
-const example2 = new QuestionList(test);
+
+let data = document.querySelector('.quiz-data').innerHTML;
+let obj = JSON.parse(data);
+
+new QuestionList(obj);
