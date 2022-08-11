@@ -40,6 +40,7 @@ db.once("open", function () {
  * Integrate (css and js) to structure
  */
 app.use('/js', express.static( __dirname + '/js') );
+app.use('/img', express.static( __dirname + '/img') );
 app.use('/public', express.static(__dirname + '/css') );
 app.use('/public', express.static(__dirname + '/node_modules/bootstrap/dist') );
 app.use('/public', express.static(__dirname + '/node_modules/font-awesome/') );

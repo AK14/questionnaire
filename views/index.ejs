@@ -23,18 +23,32 @@
     <!-- Sign In Start -->
     <div class="container-fluid">
         <div class="row h-100 p-4 align-items-center justify-content-center" style="min-height: 100vh;">
-            <div class="container-fluid pt-4 px-4">
-                <div class="h3 text-center"> <%= title %> </div>
-                <div class="row vh-100 bg-light p-4 rounded align-items-center  mx-0">
+            <div class="d-flex flex-row justify-content-around bd-highlight banner ">
+                <div class="banner-text mt-4">
+                    <div class="h1 text-uppercase" id="index-title">Онлайн опросы <br>
+                        на все темы
+                    </div>
+                    <p class="mt-3 mb-3" id="index-description">Самая популярная в мире <br> система проведения опросов </p>
+                    <div id="index-description-2">200 тысяч опросов в день</div>
+                </div>
+                <div class="banner-image">
+                    <img src="/img/main.png" alt="main">
+                </div>
+            </div>
+
+            <div class="container-fluid px-4 mt-5">
+               <!-- <div class="h3 text-center"> <%= title %> </div>-->
+                <div class="h3 text-center mb-4 "> Опросы начинаются здесь ! </div>
+                <div class="d-flex align-content-stretch flex-wrap" id="index_qlist">
                     <% if(quests) {%>
                         <% for(quest of quests) {%>
-                        <div class="card col-3 m-1">
+                        <div class="card col-3 m-1" >
                             <div class="card-body">
-                                <div class="card-title"><%=quest.title %> </div>
+                                <div class="card-title"> <%=quest.title %> </div>
                                 <div class="description"> <%=quest.description %> </div>
                             </div>
                             <div class="card-footer">
-                                <a href="quiz/<%= quest.id%>" class="btn btn-sm btn-outline-success mb-1 "> Пройти опрос </a>
+                                <a href="quiz/<%= quest.id%>" class="btn btn-sm btn-outline-primary mb-1 "> Пройти опрос </a>
                             </div>
                         </div>
                         <%} %>
@@ -44,8 +58,6 @@
 
                 </div>
             </div>
-
-
             <!-- Footer Start -->
             <%- include("partials/footer.ejs") %>
             <!-- Footer End -->

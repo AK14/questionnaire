@@ -287,3 +287,51 @@
     padding: 20px;
     border-radius:20px ;
 }
+
+.banner {
+    min-height: 70vh;
+    background: linear-gradient(to bottom right, blue, white);
+    padding-bottom: 0.5em;
+}
+
+#index-title{
+    margin-top: 3em;
+    font-size: 48px;
+    font-weight: 700;
+    color:white;
+}
+
+#index-description{
+    font-weight: 400;
+    font-size: 32px;
+    color:white;
+}
+
+#index-description-2{
+    font-weight: 700;
+    font-size: 32px;
+    color:white;
+}
+
+
+@media (max-width: 768px) {
+    .banner-image{
+        display: none;
+    }
+
+    #index-title{
+        margin-top: 0.5em;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    #index-description{
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    #index-description-2{
+        font-weight: 700;
+        font-size: 18px;
+    }
+}
