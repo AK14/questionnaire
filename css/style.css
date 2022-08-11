@@ -313,6 +313,11 @@
     color:white;
 }
 
+#quiz_detail {
+    min-height: 15vh;
+    background: linear-gradient(to bottom right, blue, darkblue);
+    color:white;
+}
 
 @media (max-width: 768px) {
     .banner-image{

@@ -22,27 +22,35 @@
 
 <div class="container-xxl position-relative bg-white d-flex p-0" >
     <!-- Sign In Start -->
-    <div class="container-fluid">
-        <div class="row h-100 p-4 align-items-center justify-content-center" style="min-height: 100vh;">
-            <div class="container-fluid pt-4 px-4">
-                <% if(quest.title){%>
-                    <div class="h3 text-center"> <%= quest.title %> </div>
-                <%}%>
-                <% if(quest.description){%>
-                    <div class="text-center"> <%= quest.description %> </div>
-                <%}%>
+    <div class="container-fluid ">
+        <div class="row p-4 align-items-start " id="quiz_detail">
+            <div class="container">
+            <% if(quest.title){%>
+                <div class="h3 title"> <%= quest.title %> </div>
+            <%}%>
+                <div class="row">
+                    <% if(quest.description){%>
+                        <div class="description col-8"> <%= quest.description %> </div>
+                    <%}%>
+                    <a href="/" class="col-2 offset-2 btn btn-sm btn-outline-warning"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Вернуться  </a>
+                </div>
 
-                <div style="display: none" class="quiz-data"><%= JSON.stringify(quest) %></div>
-                <div id="questions" name="questions" class="bg-light col-6 offset-3 mt-4 " ></div>
-
-                <a href="/" class="col-2 offset-10 btn btn-sm btn-outline-secondary"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Вернуться  </a>
             </div>
 
-            <!-- Footer Start -->
-            <%- include("../partials/footer.ejs") %>
-            <%- include("../partials/alert-modal.ejs") %>
-            <!-- Footer End -->
         </div>
+
+        <div class="container-fluid px-4">
+            <div style="display: none" class="quiz-data"><%= JSON.stringify(quest) %></div>
+
+            <div id="questions" name="questions" class="bg-light col-8 offset-1 mt-4 " ></div>
+
+        </div>
+
+        <!-- Footer Start -->
+        <%- include("../partials/footer.ejs") %>
+        <%- include("../partials/alert-modal.ejs") %>
+            <!-- Footer End -->
+
 
     </div>
 
