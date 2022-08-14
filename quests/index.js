@@ -12,8 +12,7 @@ window.onload = () => {
                 description:formData.get('description')
             },
             success: function(response){
-                console.log(response);
-                // window.location = '/quests';
+                window.location = '/quests/'+ response.id;
             },error: function(err){
                 console.log(err);
             }

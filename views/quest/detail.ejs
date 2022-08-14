@@ -14,10 +14,6 @@
     <script type="text/javascript" src="/js/quests/index.js" defer></script>
     <script type="text/javascript" src="/js/questions/index.js" defer></script>
     <script type="text/javascript" src="/public/js/bootstrap.bundle.min.js" defer></script>
-
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>-->
 </head>
 <body>
 <div class="container-xxl position-relative bg-white d-flex p-0">
@@ -34,8 +30,7 @@
         <!-- Content Start -->
 
         <div class="container-fluid pt-4 px-4">
-            <div class="vh-50 bg-light rounded align-items-center justify-content-center mx-0">
-
+            <div class="h-75 bg-light rounded align-items-center justify-content-center mx-0">
                 <div class="col-md-12 text-center border-bottom rounded p-4 mb-4">
                     <% if(itemData.title) {%>
                     <div class="h4"><%=itemData.title %></div>
@@ -56,29 +51,39 @@
                         <i class="fa fa-pencil"></i>
                     </button>
                 </div>
-
-                <div id="questions-content">
+                <div id="questions-content" class="container">
                     <% if(itemData.questions) {%>
+                        <div class="row border-bottom pb-2 font-weight-lighter text-muted text-uppercase">
+                            <div class="col-4 text-center"> Вопрос </div>
+                            <div class="col-6 text-center "> Ответы </div>
+                            <div class="col-2"> </div>
+                        </div>
                     <% for(question of itemData.questions) {%>
                         <div class="row p-2 mb-2 border-bottom">
-                            <div class="col-4 text-center">
+                            <div class="mt-4 col-4 text-center ">
                                 <div class=""><%= question.title %> </div>
                                 <div class=""> <%= question.description %> </div>
                                 <div class="align-bottom mt-4">
+                                    <!--
                                     <button type="button" class="btn btn-sm btn-outline-primary m-2" data-question="<%= question._id%>">
                                         <i class="fa fa-edit me-2"></i>
                                         Изменить
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger m-2" data-question="<%= question._id%>">
-                                        <i class="fa fa-trash me-2"></i>
-                                        Удалить
-                                    </button>
+                                    -->
+
+
                                 </div>
                             </div>
-                            <div class="col-8">
+                            <div class="col-6 text-center border-start">
                                 <% for(answer of question.answers) {%>
                                     <p><%= answer %></p>
                                 <%} %>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-sm btn-outline-danger m-2" data-question="<%= question._id%>">
+                                    <i class="fa fa-trash me-2"></i>
+                                    Удалить
+                                </button>
                             </div>
                         </div>
                     <%} %>

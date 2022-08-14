@@ -24,8 +24,8 @@ app.use(bodyParser.json());
 /*
 * database connection
 * */
-// const mongo_url = 'mongodb://localhost:27017/quest';
-const mongo_url = 'mongodb://questionnaire-200:pQJiNmjthbVCnTx7xsP_@77c7cbc9-5796-41a7-9e0b-00cc1fdef3ad.questionnaire-200.mongo.a.osc-fr1.scalingo-dbs.com:39447/questionnaire-200?replicaSet=questionnaire-200-rs0&ssl=true';
+const mongo_url = 'mongodb://localhost:27017/quest';
+// const mongo_url = 'mongodb://questionnaire-200:pQJiNmjthbVCnTx7xsP_@77c7cbc9-5796-41a7-9e0b-00cc1fdef3ad.questionnaire-200.mongo.a.osc-fr1.scalingo-dbs.com:39447/questionnaire-200?replicaSet=questionnaire-200-rs0&ssl=true';
 
 // connect to local DB
 mongoose.connect(mongo_url).catch(error => handleError(error));
@@ -121,12 +121,11 @@ app.post('/quests/create/', async (req, res) => {
         title:req.body.title,
         description:req.body.description
     })
-
     let result = await quest.addQuest(data);
     let response = {
         status  : 200,
         success : 'Added Successfully',
-        id: JSON.stringify(result)
+        id: result
     }
     try {
         res.json(response);
