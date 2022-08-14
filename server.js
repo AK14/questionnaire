@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import Quest from "./quests/quest.js";
 import Question from "./questions/question.js";
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 
 // формируем пересенные
 const __filename = fileURLToPath(import.meta.url);
@@ -20,6 +21,7 @@ app.set('view engine', 'ejs');
 app.use('views',express.static(__dirname + ('views')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cookieParser('secret key'))
 
 /*
 * database connection
@@ -63,6 +65,21 @@ app.get('/', async (req, res) => {
     })
 });
 
+app.get('/login', async (req, res) => {
+    res.render('auth/login')
+});
+
+app.post('/login', async (req, res) => {
+    let data = req.body
+    if(data.login === 'Admin' && data.password === 'TopSecret'){
+        res.cookie('auth', 'true', {
+            maxAge: 2*60*60*1000,
+            httpOnly:true
+        });
+        res.redirect('/quests');
+    }
+});
+
 
 app.get('/quiz/:questId', async (req, res) => {
     let paramId = req.params.questId;
@@ -82,6 +99,9 @@ app.get('/quiz/:questId', async (req, res) => {
  */
 
 app.get('/quests', async (req, res) => {
+    if(!req.cookies.auth || req.cookies.auth !== 'true'){
+        res.render('auth/login');
+    }
     let quests1 = await quest.getList();
 
     try {
