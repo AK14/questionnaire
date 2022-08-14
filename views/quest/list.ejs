@@ -3,12 +3,12 @@
     <div class="card-body">
         <div class="card-title"><%=quests[i].title %> </div>
         <div class="description"> <%=quests[i].description %> </div>
-        <div class="bt-group card-footer    ">
-            <a href="/quests/<%=quests[i]._id %>" class="change-item btn btn-sm btn-outline-primary">
-                Изменить
-            </a>
-            <button class="delete-item btn btn-sm btn-outline-danger" data-itemId="<%=quests[i]._id %>"> Удалить </button>
-        </div>
+    </div>
+    <div class="bt-group card-footer    ">
+        <a href="/quests/<%=quests[i]._id %>" class="change-item btn btn-sm btn-outline-primary">
+            Изменить
+        </a>
+        <button class="delete-item btn btn-sm btn-outline-danger" data-itemId="<%=quests[i]._id %>"> Удалить </button>
     </div>
 </div>
 <%} %>
